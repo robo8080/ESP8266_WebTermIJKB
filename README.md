@@ -5,22 +5,22 @@ MixJuiceのファームと入れ替えて使うこともできます。<br>
 自己責任においてご利用ください。 <br>
 <br>
 ### 必要な物 ###
-*Arduino IDE (1.6.8で動作確認をしました。)
-*SPIFFSファイルシステムアップローダー：<https://github.com/esp8266/arduino-esp8266fs-plugin>
-*arduinoWebSocketsライブラリ ：<https://github.com/Links2004/arduinoWebSockets>
-*IchigoJam用の TrueTypeフォント「IchigoJam-1.2.ttf」：<http://15jamrecipe.jimdo.com/ツール/フォント-truetype/ >
+* Arduino IDE (1.6.8で動作確認をしました。)<br>
+* SPIFFSファイルシステムアップローダー：<https://github.com/esp8266/arduino-esp8266fs-plugin><br>
+* rduinoWebSocketsライブラリ ：<https://github.com/Links2004/arduinoWebSockets><br>
+* IchigoJam用の TrueTypeフォント「IchigoJam-1.2.ttf」：<http://15jamrecipe.jimdo.com/ツール/フォント-truetype/ ><br>
 
 
 ### インストール手順 ###
- 1.Arduino IDEをインストールします。
- 2.SPIFFSファイルシステムアップローダーをインストールします。
+ 1.Arduino IDEをインストールします。<br>
+ 2.SPIFFSファイルシステムアップローダーをインストールします。<br>
+ここを参考にしてください。<https://www.mgo-tec.com/spiffs-filesystem-uploader01-html><br>
+ 3.arduinoWebSocketsライブラリをインストールします。<br>
+ 4.IchigoJam-1.2.ttfをダウンロードしてスケッチのdataフォルダの中に入れて下さい。<br>
+ 5.スケッチのssidとpasswordを自分の環境に合わせて書き換えて下さい。<br>
+ 6.スケッチをコンパイルしてESP-WROOM-02に書き込みます。<br>
+ 7.SPIFFSファイルシステムアップローダーでdataフォルダの中のファイルをSPIFSに書き込みます。<br>
 
-ここを参考にしてください。<https://www.mgo-tec.com/spiffs-filesystem-uploader01-html>
- 3.arduinoWebSocketsライブラリをインストールします。
- 4.IchigoJam-1.2.ttfをダウンロードしてスケッチのdataフォルダの中に入れて下さい。
- 5.スケッチのssidとpasswordを自分の環境に合わせて書き換えて下さい。
- 6.スケッチをコンパイルしてESP-WROOM-02に書き込みます。
- 7.SPIFFSファイルシステムアップローダーでdataフォルダの中のファイルをSPIFSに書き込みます。
 
 
 ### 接続 ###
