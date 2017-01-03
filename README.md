@@ -8,7 +8,7 @@ MixJuiceのファームと入れ替えて使うこともできます。<br>
 * Arduino IDE (1.6.8で動作確認をしました。)<br>
 * SPIFFSファイルシステムアップローダー：<https://github.com/esp8266/arduino-esp8266fs-plugin><br>
 * rduinoWebSocketsライブラリ ：<https://github.com/Links2004/arduinoWebSockets><br>
-* IchigoJam用の TrueTypeフォント「IchigoJam-1.2.ttf」：<http://15jamrecipe.jimdo.com/ツール/フォント-truetype/ ><br>
+* IchigoJam用の TrueTypeフォント「IchigoJam-1.2.ttf」：<http://15jamrecipe.jimdo.com/ツール/フォント-truetype/><br>
 
 
 ### インストール手順 ###
@@ -33,9 +33,9 @@ MixJuiceの回路を参考にして下さい。<http://mixjuice.shizentai.jp/><b
 
 
 ### 使い方 ###
- 1.IchigoJamとESP-WROOM-02の電源を同時に入れてください。
- 2.アクセスポイントに接続するとLED1が点灯します。
- 3.ブラウザで、http://esp8266.local にアクセスします。
+ 1.IchigoJamとESP-WROOM-02の電源を同時に入れてください。<br>
+ 2.アクセスポイントに接続するとLED1が点灯します。<br>
+ 3.ブラウザで、http://esp8266.local にアクセスします。<br>
 
 
 
