@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="license" content="ijkb.html ver1.1: CC BY Michio Ono">
+    <meta name="license" content="CC BY MicJack http://ijutilities.micutil.com">
+    <meta name="license" content="CC BY IchigoJam http://ichigojam.net">
+    <meta name="license" content="IchigoJam-FONT: CC BY BALLOON a.k.a. Fu-sen. http://15jamrecipe.jimdo.com/">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1, maximum-scale=1">
+	<title>IchigoJam WebTerm</title>
+    <style type="text/css" title="ijkeystyle">
+        @font-face {
+            font-family: 'IchigoJam-1.2';
+            src: url('IchigoJam-1.2.ttf') format('truetype');
+        }
+				* {
+				//  margin: 0;
+				  padding: 0;
+				//  border: 0;
+				}
+        
+        body {
+            background-color: lightgrey;
+            
+            -webkit-touch-callout: none; /* Chrome all / Safari all */
+            -moz-touch-callout: none;     /* Firefox all */
+            -ms-touch-callout: none;      /* IE 10+ */
+            
+            -webkit-user-select: none;  /* Chrome all / Safari all */
+            -moz-user-select: none;     /* Firefox all */
+            -ms-user-select: none;      /* IE 10+ */
+        }
+        .ijkey,.ijSwitch,.ijSpace,.ijFunc,.ijFcSw,.ijSpec,.ijDelKey,.ijArrWKey,.ijArrNKey,.ijRetKey
+        {
+            text-align: center;
+            font-family: 'IchigoJam-1.2';
+            border: 1px solid #468db3;
+            background-color: ghostwhite;
+            border-radius: 6px;
+            margin: 1px 1px 0px 0px;
+            padding: 0px 0px;
+            font-size:16px;
+            width: 9.6%;
+            height: 40px;
+        }
+        .ijSwitch {
+            font-size:12px;
+            width: 12%;
+        }        
+        .ijSpace {
+            font-size:12px;
+            width: 30%;
+        }
+        .ijFunc {
+            //margin: 1px 1px 5px 0px;
+            font-size:8px;
+            width: 13%;
+            height: 32px;
+        }
+        .ijFcSw {
+            //margin: 1px 1px 5px 0px;
+            font-size:8px;
+            width: 7%;
+            height: 32px;
+        }
+        .ijSpec {
+            margin: 1px 1px 5px 0px;
+            font-size:8px;
+            width: 15%;
+            height: 32px;
+        }
+       .ijDelKey {
+            font-size:12px;
+            width: 94%;
+        }        
+         .ijRetKey {
+            font-size:10px;
+            width: 94%;
+            height: 48px;
+       }        
+        .ijArrWKey {
+            font-size:12px;
+            width: 94%;
+            height: 36px;
+        }        
+        .ijArrNKey {
+            font-size:12px;
+            width: 46%;
+            height: 40px;
+        }        
+        .keybox {
+            float: left;
+            //border: solid 1px red;
+            width:85%;
+        }
+        .ctrlbox {
+            float: right;
+            //border: solid 1px red;
+            width:14%
+        }
+    div.box0 { /* 親ボックス */
+        width: 825px;
+        height: 345px;
+        //background-color: #85b9e9;
+        margin-top:10px;
+        margin-left:auto;
+        margin-right:auto;
+        //border: 1px solid #468db3;
+    }
+
+    div.box1 { /* ボックス1 */
+        float:left;
+        width: 400px;
+        height: 300px;
+        //background-color: #ffd78c;
+    } 
+
+    div.box2 { /* ボックス2 */
+        float:left;
+        width: 425px;
+        height: 300px;
+        //background-color: #bde9ba;
+    }
+    div.box3 { /* ボックス3 */
+        width: 425px;
+        height: 40px;
+        //background-color: #bde900;
+     }
+    .terminal {
+        // float: left;
+        //width:384px;
+        //height:450px;
+        //margin-bottom:8px;
+        //border: #000 solid 5px;
+        font-family: 'IchigoJam-1.2';
+        font-size: 12px;
+        color: #f0f0f0;
+        background: #000;
+    }
+
+    #edit{
+        font-family:'IchigoJam-1.2';
+        //border: #fff solid 5px;
+        //width:384px;
+        font-size:12px;
+    }
+    #upload{
+        //font-family: 'IchigoJam-1.2';
+        border: 1px solid #468db3;
+        background-color: ghostwhite;
+        //font-size:9px;
+        //margin-left:5px;
+        border: #000 solid 1px;
+        border-radius: 3px;
+        }
+    #selfile {
+        width:170px;
+    }
+	</style>
+    <script src="term.js"></script>
+    <script type="text/javascript">
+        var connection;
+				;(function() {
+				  window.onload = function() {
+				      var term = new Terminal({
+				        cols: 32,
+				        rows: 24,
+				        useStyle: true,
+				        screenKeys: false,
+				        cursorBlink: true,
+				        convertEol: true
+				      });
+
+				      term.open(document.getElementById('termAria'));
+				      //term.open(document.body);
+							keyInit();
+
+				//      var connection = new WebSocket('ws://192.168.0.39:81/', ['arduino']);
+				//      var connection = new WebSocket('ws://192.168.0.37:81/', ['arduino']);
+				//      connection = new WebSocket('ws://192.168.0.39:81/', ['arduino']);
+				      connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);
+				      connection.binaryType = 'arraybuffer';
+
+				//      term.write('\x1b[31mWelcome to term.js!\x1b[m\r\n');
+						var obj1 = document.getElementById("selfile");
+
+						obj1.addEventListener("click",function(evt){
+						  obj1.value = '';
+                          document.test.txt.value = "";
+						},false);
+
+						//ダイアログでファイルが選択された時
+						obj1.addEventListener("change",function(evt){
+
+						  var file = evt.target.files;
+
+						  //FileReaderの作成
+						  var reader = new FileReader();
+						  //テキスト形式で読み込む
+						  reader.readAsText(file[0]);
+						  //reader.readAsArrayBuffer(file[0]);
+						  
+						  //読込終了後の処理
+						  reader.onload = function(ev){
+						    //送信する
+						    data = reader.result;
+                            document.test.txt.value = reader.result;
+/*
+		            data = "new\n" + data +"\n";
+		            var buf = new ArrayBuffer(data.length);
+		            var bufView = new Uint8Array(buf);
+		             for(var i = 0; i < data.length;i++) {
+		                bufView[i]=data.charCodeAt(i);
+		            }
+		            //var byteArray = new Uint8Array(bt.value);
+		             connection.send(buf);
+*/				              
+				              
+						    //connection.send("new\r\n"); 
+						    //connection.send( data);
+						    //connection.send("\r\n");
+						//  connection.send(reader.result);
+						  };
+						},false);
+/*
+			      term.on('data', function(data) {
+				      if(data == "\r") data = "\n";
+			           var buf = new ArrayBuffer(data.length);
+			           var bufView = new Uint8Array(buf);
+					       for(var i = 0; i < data.length;i++) {
+							     bufView[i]=data.charCodeAt(i);
+			           }
+			          connection.send(buf);
+			      });
+*/
+				    connection.onopen = function () {
+				      //connection.send('\nConnect \n' + new Date() + "\n"); 
+				      console.log('connect');
+				      term.write('\x1b[32mWelcome to WebTerm!\x1b[m\r\n');
+				    };
+
+			      connection.onmessage = function (e) {
+			          //console.log('Server: ', e.data);
+			          //if(e.data == "\r")  term.write("\n");
+			          //else 
+			      //term.write('\x1b[32mWelcome to WebTerm!\x1b[m\r\n');
+			          //term.write(String.fromCharCode.apply(null, [65, 66, 67]));
+
+			          var buffer = new Uint16Array(e.data);
+			          term.write(String.fromCharCode.apply(null, buffer));
+			          //term.write(String.fromCharCode.apply(null, [0x103,0x104]));
+			          //term.write(String.fromCharCode(buffer[0]));
+			              //term.write(buffer[0].toString(16));
+			              //term.write(buffer.charCodeAt(0));
+			      };
+			      connection.onclose = function (event) {
+			           //term.destroy();
+			      };
+			      connection.onerror = function (error) {
+			          console.log('WebSocket Error ', error);
+			      };
+
+				  };
+				}).call(this);
+
+        //Keyboard Layouts
+        var ijcmdNum=0;
+        var keyNum=0;
+        var UpLowNum=0;
+        var CharNum=2;
+        var KataNum=5;
+        var ijcmds=[
+          ["CLS","LOAD","SAVE","LIST","RUN"],
+          ["NEW","SWITCH","FILES","LED1","LED0"],
+          ["VIDEO1","VIDEO0"]
+        ];
+        var keys=[
+            [
+                ['1','2','3','4','5','6','7','8','9','0'],
+                ['Q','W','E','R','T','Y','U','I','O','P'],
+                ['A','S','D','F','G','H','J','K','L'],
+                ['Z','X','C','V','B','N','M'],
+                ['Lower_key','CALC_key','Space_Bar','Char_key','Kana_key']
+            ],
+            [
+                ['1','2','3','4','5','6','7','8','9','0'],
+                ['q','w','e','r','t','y','u','i','o','p'],
+                ['a','s','d','f','g','h','j','k','l'],
+                ['z','x','c','v','b','n','m'],
+                ['Upper_key','CALC_key','Space_Bar','Char_key','Kana_key']
+            ],
+            [
+                ['!','&quot;','#','$','%','&amp;','&#39;','(',')'],
+                ['+','-','*','/','=',',','.',';',':'],
+                ['<','>','[',']','{','}','&#92;','^',],
+                ['?','@','_','`','|','~','ſ'],
+                ['ABC_key','Space_Bar','Char_key','Kana_key']
+            ],
+            [
+                ['Ā','ā','Ă','ă','Ą','ą','Ć','ć'],
+                ['Ĉ','ĉ','Ċ','ċ','Č','č','Ď','ď'],
+                ['Đ','đ','Ē','ē','Ĕ','ĕ','Ė','ė'],
+                ['Ę','ę','Ě','ě','Ĝ','ĝ','Ğ','ğ'],
+                ['ABC_key','CALC_key','Space_Bar','Char_key','Kana_key']
+            ],
+            [
+                ['ƀ','Ɓ','Ƃ','ƃ','Ƅ','ƅ','Ɔ','Ƈ'],
+                ['ƈ','Ɖ','Ɗ','Ƌ','ƌ','ƍ','Ǝ','Ə'],
+                ['Ɛ','Ƒ','ƒ','Ɠ','Ɣ','ƕ','Ɩ','Ɨ'],
+                ['Ƙ','ƙ','ƚ','ƛ','Ɯ','Ɲ','ƞ','Ɵ'],
+                ['ABC_key','CALC_key','Space_Bar','Char_key','Kana_key']
+            ],
+            [
+                ['Ǡ','ǡ','Ǣ','ǣ','Ǥ','ǥ','Ǧ','ǧ'],
+                ['Ǩ','ǩ','Ǫ','ǫ','Ǭ','ǭ','Ǯ','ǯ'],
+                ['ǰ','Ǳ','ǲ','ǳ','Ǵ','ǵ','Ƕ','Ƿ'],
+                ['Ǹ','ǹ','Ǻ','ǻ','Ǽ','ǽ','Ǿ','ǿ'],
+                ['ABC_key','CALC_key','Space_Bar','Char_key','Kana_key']
+            ],
+            [
+                ['1','2','3','4','5','6','7','8','9','0'],
+                ['Ʊ','Ʋ','Ƴ','ƴ','Ƶ','ƶ','Ʒ','Ƹ','ƹ','ƺ'],
+                ['ƻ','Ƽ','ƽ','ƾ','ƿ','ǀ','ǁ','ǂ','ǃ','Ǆ'],
+                ['ǅ','ǆ','Ǉ','ǈ','ǉ','Ǌ','ǋ','ǌ','Ǎ','ǎ'],
+                ['ABC_key','CALC_key','Space_Bar','Char_key','Kana_key']
+            ],
+            [
+                ['Ǐ','ǐ','Ǒ','ǒ','Ǔ','ǔ','Ǖ','ǖ','Ƣ','ƣ'],
+                ['Ǘ','ǘ','Ǚ','ǚ','Ǜ','ǜ','Ʀ','ǝ','Ǟ','ǟ'],
+                ['Ƨ','ƨ','Ʃ','ƪ','ƫ','Ƭ','ƭ','Ʈ','Ư'],
+                ['ư','Ơ','ơ','Ƥ','ƥ'],
+                ['ABC_key','CALC_key','Space_Bar','Char_key','Kana_key']
+            ],
+        ];
+        
+        //Top Page
+        function toRoot() {
+            location.href="index.htm";
+        }
+        
+        //Keydown mode
+        var keyDownMode=0;
+        var keyModeStyle="";
+        function chgKeyMode() {
+            keyDownMode=keyDownMode==0 ? 1:0;
+            if(keyDownMode) keyModeStyle=" style='background-color:#00DD00'"; else keyModeStyle="";
+            setfnc();
+            setkbd();
+            setCtrl();
+        }
+        
+        //Send data
+        function sendCmd(bt){
+            var cmd=bt.value;
+            //var url="/ijcmd/"+cmd;
+            //var xhr = new XMLHttpRequest();
+            //xhr.open("GET", url, true);
+            //xhr.send();
+            //console.log(cmd);
+            //document.getElementById("result").textContent=cmd;
+           //term.write(bt.value);
+            cmd = cmd + "\n";
+            var buf = new ArrayBuffer(cmd.length);
+            var bufView = new Uint8Array(buf);
+             for(var i = 0; i < cmd.length;i++) {
+                bufView[i]=cmd.charCodeAt(i);
+            }
+            //var byteArray = new Uint8Array(bt.value);
+             connection.send(buf);
+        }
+        function sendKey(bt){
+            var code=bt.value.charCodeAt(0);//.toString(16);
+            //var url="/ijkey/"+code;
+            //var xhr = new XMLHttpRequest();
+            //xhr.open("GET", url, true);
+            //xhr.send();
+            //term.write(bt.value);
+            var buf = new ArrayBuffer(bt.value.length);
+            var bufView = new Uint8Array(buf);
+            for(var i = 0; i < bt.value.length;i++) {
+               bufView[i]=bt.value.charCodeAt(i);
+            }
+            //var byteArray = new Uint8Array(bt.value);
+            //term.write(code.toString(16));
+            connection.send(buf);
+            //connection.send(byteArray.buffer);
+            if(keyDownMode&&(code>=28&&code<=32)) connection.send(buf);
+            //if(bt.value == '&#10')  connection.send('\r');
+            console.log(code+" ("+code.toString(16).toUpperCase()+")");
+            //document.getElementById("result").textContent=code+" ("+code.toString(16).toUpperCase()+")";
+        }
+        
+        //Change command button
+        function chgCmd(n) {
+            ijcmdNum=ijcmdNum+n;
+            if(ijcmdNum<0) {
+                ijcmdNum=ijcmds.length-1;
+            } else if(ijcmdNum>=ijcmds.length) {
+                ijcmdNum=0;
+            }
+           setfnc();
+        }
+        
+        //Change keyboard
+        function chgKey(n) {
+            if(n<0) n=UpLowNum;
+            if(n<2) UpLowNum=n;
+            if(n>=3 && n<=5) {
+                CharNum=n;
+                if(n==5) CharNum=2;
+            }
+            if(n>=6 && n<=7) {
+                KataNum=n;
+                if(n==7) KataNum=5;
+            }
+            keyNum=n;
+            setkbd();
+        }
+        
+        //Display function button
+        function setfnc() {
+            var i,j;
+            var s="";
+            s=s+"<button class='ijFcSw' onClick='chgKeyMode()'"+keyModeStyle+">&#x1F3AE;</button>";
+            s=s+"<button class='ijFcSw' onClick='toRoot()'>&#x1F4DD;</button> ";
+            s=s+"<button class='ijFcSw' value='<' onClick='chgCmd(-1)'>&lt;</button>";
+            for(i=0;i<ijcmds[ijcmdNum].length;i++) {
+                var d=ijcmds[ijcmdNum];
+                s=s+"<button class='ijFunc' value='"+d[i]+"' onClick='sendCmd(this)'>"+d[i]+"</button>";
+            }
+            s=s+"<button class='ijFcSw' value='>' onClick='chgCmd(1)'>&gt;</button>";
+            document.getElementById("funcAria").innerHTML=s;
+        }
+        
+        //Display special button
+        function setSpec() {
+            var s="";
+            s=s+"<button class='ijSpec' value='&#27' onClick='sendKey(this)'>ESC</button> ";
+            s=s+"<button class='ijSpec' value='&#18' onClick='sendKey(this)'>Home</button>";
+            s=s+"<button class='ijSpec' value='&#23' onClick='sendKey(this)'>End</button> ";
+            s=s+"<button class='ijSpec' value='&#19' onClick='sendKey(this)'>PgUp</button>";
+            s=s+"<button class='ijSpec' value='&#20' onClick='sendKey(this)'>PgDwn</button> ";
+            s=s+"<button class='ijSpec' value='&#17' onClick='sendKey(this)'>Ins</button>";
+            document.getElementById("SpecAria").innerHTML=s;
+        }
+        
+        //Display normal Key button
+        function setkbd() {
+            var i,j;
+            var s="";
+            for(j=0;j<keys[keyNum].length;j++) {
+                var d=keys[keyNum][j];
+                for (i=0;i<d.length;i++){
+                    s=s+"<button class=";
+                    switch(d[i]) {
+                        case "Lower_key":
+                            s=s+"'ijSwitch' onClick='chgKey(1)'>"+"A>a";
+                            break;
+                        case "Upper_key":
+                            s=s+"'ijSwitch' onClick='chgKey(0)'>"+"a>A";
+                            break;
+                        case "CALC_key":
+                            s=s+"'ijSwitch' onClick='chgKey(2)'>"+"+*=";
+                            break;
+                        case "ABC_key":
+                            s=s+"'ijSwitch' onClick='chgKey(-1)'>"+"ABC";
+                            break;
+                        case "Char_key":
+                            s=s+"'ijSwitch' onClick='chgKey(CharNum+1)'>"+"C"+String(CharNum-1);
+                            break;
+                        case "Kana_key":
+                            s=s+"'ijSwitch' onClick='chgKey(KataNum+1)'>"+"K"+String(KataNum-4);
+                            break;
+                        case "Space_Bar":
+                            s=s+"'ijSpace' value=' ' onClick='sendKey(this)'"+keyModeStyle+">"+" SPACE ";
+                            break;
+                        default:
+                            s=s+"'ijkey' value='"+d[i]+"' onClick='sendKey(this)'>"+d[i];
+                            break;
+                    }
+                    s=s+"</button>";
+                }
+                s=s+"<br>";//document.write("<br>");
+            }
+            document.getElementById("keyAria").innerHTML=s;
+        }
+        
+        //Display control button
+        function setCtrl() {
+            var s="";
+            s=s+"<button class='ijDelKey' value='&#8' onClick='sendKey(this)'>DEL</button><br/>";
+            s=s+"<button class='ijRetKey' value='&#10' onClick='sendKey(this)'>RETURN</button><br/>";
+            s=s+"<button class='ijArrWKey' value='&#30' onClick='sendKey(this)'"+keyModeStyle+">Ğ</button><br/>";
+            s=s+"<button class='ijArrNKey' value='&#28' onClick='sendKey(this)'"+keyModeStyle+">Ĝ</button>";
+            s=s+"<button class='ijArrNKey' value='&#29' onClick='sendKey(this)'"+keyModeStyle+">ĝ</button><br/>";
+            s=s+"<button class='ijArrWKey' value='&#31' onClick='sendKey(this)'"+keyModeStyle+">ğ</button>";
+            document.getElementById("ctrlAria").innerHTML=s;
+        }
+        function keyInit() {
+            setfnc();
+            setSpec();
+            setkbd();
+            setCtrl();
+        }
+        function start1()
+       {
+            //document.test.txt.value = "";
+			data = document.test.txt.value;
+          //var data = "abc";
+		    //data = "new\n" + data +"\n";
+		    data = data +"\n";
+		    var buf = new ArrayBuffer(data.length);
+		    var bufView = new Uint8Array(buf);
+		    for(var i = 0; i < data.length;i++) {
+		        bufView[i]=data.charCodeAt(i);
+		    }
+		    //var byteArray = new Uint8Array(bt.value);
+		    connection.send(buf);
+       }
+     function start3()
+       {
+            //document.test.txt.value = "";
+			data = document.test.txt.value;
+          //var data = "abc";
+		    data = "new\n" + data +"\n";
+		    //data = data +"\n";
+		    var buf = new ArrayBuffer(data.length);
+		    var bufView = new Uint8Array(buf);
+		    for(var i = 0; i < data.length;i++) {
+		        bufView[i]=data.charCodeAt(i);
+		    }
+		    //var byteArray = new Uint8Array(bt.value);
+		    connection.send(buf);
+       }
+   
+        function start2()
+       {
+            document.test.txt.value = "";
+       }
+    </script>
+</head>
+<body>
+<div class="box0">
+
+    <div class="box1">
+        <div id="termAria"></div>
+    </div>
+    <div class="box2">
+        <form name="test" >
+           <textarea id="edit" name="txt" rows="24" cols="32" ></textarea>
+        </form>
+        <div class="box3">
+                <input type="file" id="selfile" accept=".txt,.bas">
+                <input id="upload" type="button" value="送信" onclick="start1();" />
+                <input id="upload" type="button" value="NEW+送信" onclick="start3();" />
+                <input id="upload" type="button" value="クリア" onclick="start2();" /><br>
+        </div>
+    </div>
+
+</div>
+    
+    <center>
+    <div id="funcAria" style="clear:both;"></div>
+    <div id="SpecAria"></div>
+    <div class='keybox'><div id="keyAria"></div></div>
+    <div class='ctrlbox'><div id="ctrlAria"></div></div>
+    </center>
+
+</body>
+</html>
