@@ -10,6 +10,7 @@
 #include <FS.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
+#include <QueueArray.h>
 
 #define LED1    12
 #define LED2    4
@@ -21,12 +22,14 @@ const char* ssid = "******************";
 const char* password = "******************";
 bool WS_connected = false;
 int WS_num = 0;
+// create a queue of characters.
+QueueArray <char> queue;
 
 ESP8266WiFiMulti WiFiMulti;
 ESP8266WebServer server = ESP8266WebServer(80);
 WebSocketsServer webSocket = WebSocketsServer(81);
 void serverSetup();
-void serial2ws();
+void serial2ws(int select);
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght);
 
 void IJCodeSend(uint8_t num, uint8_t code);
@@ -64,7 +67,10 @@ void loop() {
   ArduinoOTA.handle();
   webSocket.loop();
   server.handleClient();
-  serial2ws();
+  serial2ws(1);
+  while (!queue.isEmpty ()) {
+    MJ_Command(queue.dequeue ());
+  }
 }
 
 String getContentType(String filename){
@@ -230,6 +236,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
             }
             if(payload[i] == 0x0d) delay(250);
             else delay(20);
+            serial2ws(0);
           }
           digitalWrite(LED3, LOW);    // turn the LED off by making the voltage LOW
             break;
@@ -296,7 +303,7 @@ void IJCodeConv(uint8_t code) {
 }
 
 uint8_t dbuf[256];
-void serial2ws() {
+void serial2ws(int select) {
   //check UART for data
 //  if(Serial.available()){
   while(Serial.available()){
@@ -310,10 +317,15 @@ void serial2ws() {
        }
        webSocket.sendBIN(WS_num, termCodeBuff, termCodeLen);
        termCodeLen = 0;
-       
-      for (int i= 0 ; i< len ;i++) {
-          MJ_Command((char)sbuf[i]);
-       }
+      if(select != 0) { 
+        for (int i= 0 ; i< len ;i++) {
+            MJ_Command((char)sbuf[i]);
+         }
+      } else {
+        for (int i= 0 ; i< len ;i++) {
+            queue.enqueue ((char)sbuf[i]);
+         }        
+      }
      
       digitalWrite(LED2, LOW);    // turn the LED off by making the voltage LOW
     }
@@ -621,6 +633,7 @@ void MJ_HTML(int type, String addr) {
             delay(spw);
             break;
           }
+          serial2ws(0);
         }
       }
       if(!addr.equals(homepage)) lastGET=addr;
@@ -790,6 +803,7 @@ void MJ_HTMLS(int type, String addr) {
             delay(spw);
             break;
           }
+          serial2ws(0);
         }
       }
       if(!addr.equals(homepage)) lastGET=addr;

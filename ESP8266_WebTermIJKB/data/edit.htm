@@ -175,13 +175,9 @@
 				      //term.open(document.body);
 							keyInit();
 
-				//      var connection = new WebSocket('ws://192.168.0.39:81/', ['arduino']);
-				//      var connection = new WebSocket('ws://192.168.0.37:81/', ['arduino']);
-				//      connection = new WebSocket('ws://192.168.0.39:81/', ['arduino']);
 				      connection = new WebSocket('ws://'+location.hostname+':81/', ['arduino']);
 				      connection.binaryType = 'arraybuffer';
 
-				//      term.write('\x1b[31mWelcome to term.js!\x1b[m\r\n');
 						var obj1 = document.getElementById("selfile");
 
 						obj1.addEventListener("click",function(evt){
@@ -215,11 +211,6 @@
 		            //var byteArray = new Uint8Array(bt.value);
 		             connection.send(buf);
 */				              
-				              
-						    //connection.send("new\r\n"); 
-						    //connection.send( data);
-						    //connection.send("\r\n");
-						//  connection.send(reader.result);
 						  };
 						},false);
 /*
@@ -240,18 +231,8 @@
 				    };
 
 			      connection.onmessage = function (e) {
-			          //console.log('Server: ', e.data);
-			          //if(e.data == "\r")  term.write("\n");
-			          //else 
-			      //term.write('\x1b[32mWelcome to WebTerm!\x1b[m\r\n');
-			          //term.write(String.fromCharCode.apply(null, [65, 66, 67]));
-
 			          var buffer = new Uint16Array(e.data);
 			          term.write(String.fromCharCode.apply(null, buffer));
-			          //term.write(String.fromCharCode.apply(null, [0x103,0x104]));
-			          //term.write(String.fromCharCode(buffer[0]));
-			              //term.write(buffer[0].toString(16));
-			              //term.write(buffer.charCodeAt(0));
 			      };
 			      connection.onclose = function (event) {
 			           //term.destroy();
@@ -352,42 +333,25 @@
         //Send data
         function sendCmd(bt){
             var cmd=bt.value;
-            //var url="/ijcmd/"+cmd;
-            //var xhr = new XMLHttpRequest();
-            //xhr.open("GET", url, true);
-            //xhr.send();
-            //console.log(cmd);
-            //document.getElementById("result").textContent=cmd;
-           //term.write(bt.value);
             cmd = cmd + "\n";
             var buf = new ArrayBuffer(cmd.length);
             var bufView = new Uint8Array(buf);
              for(var i = 0; i < cmd.length;i++) {
                 bufView[i]=cmd.charCodeAt(i);
             }
-            //var byteArray = new Uint8Array(bt.value);
              connection.send(buf);
         }
         function sendKey(bt){
             var code=bt.value.charCodeAt(0);//.toString(16);
-            //var url="/ijkey/"+code;
-            //var xhr = new XMLHttpRequest();
-            //xhr.open("GET", url, true);
-            //xhr.send();
-            //term.write(bt.value);
             var buf = new ArrayBuffer(bt.value.length);
             var bufView = new Uint8Array(buf);
             for(var i = 0; i < bt.value.length;i++) {
                bufView[i]=bt.value.charCodeAt(i);
             }
-            //var byteArray = new Uint8Array(bt.value);
-            //term.write(code.toString(16));
             connection.send(buf);
             //connection.send(byteArray.buffer);
             if(keyDownMode&&(code>=28&&code<=32)) connection.send(buf);
-            //if(bt.value == '&#10')  connection.send('\r');
             console.log(code+" ("+code.toString(16).toUpperCase()+")");
-            //document.getElementById("result").textContent=code+" ("+code.toString(16).toUpperCase()+")";
         }
         
         //Change command button
@@ -504,32 +468,24 @@
         }
         function start1()
        {
-            //document.test.txt.value = "";
-			data = document.test.txt.value;
-          //var data = "abc";
-		    //data = "new\n" + data +"\n";
-		    data = data +"\n";
-		    var buf = new ArrayBuffer(data.length);
-		    var bufView = new Uint8Array(buf);
-		    for(var i = 0; i < data.length;i++) {
-		        bufView[i]=data.charCodeAt(i);
-		    }
-		    //var byteArray = new Uint8Array(bt.value);
-		    connection.send(buf);
+          data = document.test.txt.value;
+          data = data +"\n";
+          var buf = new ArrayBuffer(data.length);
+          var bufView = new Uint8Array(buf);
+          for(var i = 0; i < data.length;i++) {
+              bufView[i]=data.charCodeAt(i);
+          }
+          connection.send(buf);
        }
      function start3()
        {
-            //document.test.txt.value = "";
-			data = document.test.txt.value;
-          //var data = "abc";
+			  data = document.test.txt.value;
 		    data = "new\n" + data +"\n";
-		    //data = data +"\n";
 		    var buf = new ArrayBuffer(data.length);
 		    var bufView = new Uint8Array(buf);
 		    for(var i = 0; i < data.length;i++) {
 		        bufView[i]=data.charCodeAt(i);
 		    }
-		    //var byteArray = new Uint8Array(bt.value);
 		    connection.send(buf);
        }
    
