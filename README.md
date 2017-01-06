@@ -34,9 +34,9 @@ MixJuiceの回路を参考にして下さい。<http://mixjuice.shizentai.jp/><b
 
 
 ### 使い方 ###
- 1.IchigoJamとESP-WROOM-02の電源を同時に入れてください。<br>
- 2.アクセスポイントに接続するとLED1が点灯します。<br>
- 3.ブラウザで、http://esp8266.local 又は http://esp8266.local/edit.htm にアクセスします。<br>
+ 1. IchigoJamとESP-WROOM-02の電源を同時に入れてください。<br>
+ 2. アクセスポイントに接続するとLED1が点灯します。<br>
+ 3. ブラウザで、http://esp8266.local 又は http://esp8266.local/edit.htm にアクセスします。<br>
  上手く接続できないときは、http://192.168.xxx.xxx の様に、IPアドレスで直接アクセスして下さい。<br>
 
 
