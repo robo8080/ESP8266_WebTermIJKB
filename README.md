@@ -13,14 +13,14 @@ MixJuiceのファームと入れ替えて使うこともできます。<br>
 
 
 ### インストール手順 ###
- 1.Arduino IDEをインストールします。<br>
- 2.SPIFFSファイルシステムアップローダーをインストールします。<br>
+ 1. Arduino IDEをインストールします。<br>
+ 2. SPIFFSファイルシステムアップローダーをインストールします。<br>
 ここを参考にしてください。<https://www.mgo-tec.com/spiffs-filesystem-uploader01-html><br>
- 3.arduinoWebSocketsライブラリとQueueArray Library For Arduinoをインストールします。<br>
- 4.IchigoJam-1.2.ttfをダウンロードして、スケッチのdataフォルダの中に入れて下さい。<br>
- 5.スケッチのssidとpasswordを自分の環境に合わせて書き換えて下さい。<br>
- 6.スケッチをコンパイルしてESP-WROOM-02に書き込みます。<br>
- 7.SPIFFSファイルシステムアップローダーでdataフォルダの中のファイルをSPIFSに書き込みます。<br>
+ 3. arduinoWebSocketsライブラリとQueueArray Library For Arduinoをインストールします。<br>
+ 4. IchigoJam-1.2.ttfをダウンロードして、スケッチのdataフォルダの中に入れて下さい。<br>
+ 5. スケッチのssidとpasswordを自分の環境に合わせて書き換えて下さい。<br>
+ 6. スケッチをコンパイルしてESP-WROOM-02に書き込みます。<br>
+ 7. SPIFFSファイルシステムアップローダーでdataフォルダの中のファイルをSPIFSに書き込みます。<br>
 
 
 
