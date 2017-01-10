@@ -391,7 +391,15 @@ void IJCodeSendString(uint8_t num, String st) {
 }
 
 //------------------------------------------------------------------------------
-const String MJVer="MicJack-0.8.0";
+/*
+ *  MicJack by Michio Ono.
+ *  IoT interface module for IchigoJam with ESP-WROOM-02
+ *  CC BY
+ */
+// modified by robo8080
+ 
+const String MicJackVer="MicJack-0.8.0";
+const String MJVer="MixJuice-1.2.0";
 String inStr = ""; // a string to hold incoming data
 boolean stringComplete = false;  // whether the string is complete
 
@@ -410,6 +418,14 @@ String myPostContentType="";
 int spw=kspw;
 int spn=kspn;
 
+/*** Use access Status LED ***/
+//#define useMJLED
+#ifdef useMJLED
+  const int connLED=12; //Green
+  const int postLED=4;  //Yellow
+  const int getLED=5;   //Red
+#endif
+
 String homepage="mj.micutil.com";
 String lastGET=homepage;
 
@@ -422,6 +438,16 @@ void ResetPostParam() {
   postmode=false;
   postaddr="";
   postdata="";
+}
+
+void SetPCT(String s) {
+  int n=s.length();
+  if(n<=0) {
+    myPostContentType="";
+  } else {
+    //Content-Type: application/x-www-form-urlencoded;\r\n
+    myPostContentType="Content-Type: "+s+"\r\n";
+  }
 }
 
 void MJ_Command(char inChar) {
@@ -489,9 +515,20 @@ void MJ_Command(char inChar) {
       /*** HTMLS POST通信 ***/
       MJ_POST_START(HTML_POSTS,inStr.substring(15));
       
+    } else if(cs.startsWith("MJ PCT ")) {
+      /*** PCT ***/ SetPCT(inStr.substring(7));
+    
+    } else if(cs.startsWith("MJ MJVER")) {
+      /*** バージョン ***/ Serial.println("'"+MicJackVer);
+      IJCodeSendString(WS_num, "'"+MicJackVer);
+      IJCodeSend(WS_num, 0x0a);
+      // Verで、エラー表示で、MixJuiceのバージョンを表示
+      // MJVerで、MicJackのバージョンを表示
+      
     } else if(cs.startsWith("MJ ")) {
       /*** NG ***/ Serial.println("'NG: "+MJVer);
-      IJCodeSendString(WS_num, "'NG: "+MJVer + "n");
+      IJCodeSendString(WS_num, "'NG: "+MJVer);
+      IJCodeSend(WS_num, 0x0a);
     }
 
     inStr="";
@@ -554,7 +591,8 @@ void MJ_HTML(int type, String addr) {
       client.print(String("GET ") + url + " HTTP/1.0\r\n" + 
                    "Host: " + host + "\r\n" + 
                    "User-Agent: " + MJVer + "\r\n" + 
-                   "Connection: close\r\n\r\n");
+                   //"Connection: close\r\n" +
+                   "\r\n");
                    //"Accept: */*\r\n" + 
       break;
 
@@ -565,13 +603,13 @@ void MJ_HTML(int type, String addr) {
       #endif
       prm=postdata;//postdata.replace("\n","\r\n");//改行を置き換え
 
-      client.print(String("POST ") + url + " HTTP/1.1\r\n" + 
+      client.print(String("POST ") + url + " HTTP/1.0\r\n" + 
                   "Accept: */*\r\n" + 
                   "Host: " + host + "\r\n" + 
                   "User-Agent: " + MJVer + "\r\n" + 
-                  "Connection: close\r\n" +
-                  "Content-Length: " + String(prm.length()) + "\r\n" +
+                  //"Connection: close\r\n" +
                   myPostContentType +
+                  "Content-Length: " + String(prm.length()) + "\r\n" +
                   "\r\n" + 
                   prm);
                   //"Content-Type: application/x-www-form-urlencoded;\r\n" +
@@ -645,7 +683,8 @@ void MJ_HTML(int type, String addr) {
     case HTML_POST:
     case HTML_POSTS:
       Serial.println("'POST OK!");
-      IJCodeSendString(WS_num, "'POST OK!\n");
+      IJCodeSendString(WS_num, "'POST OK!");
+      IJCodeSend(WS_num, 0x0a);
       #ifdef useMJLED
         digitalWrite(postLED, LOW);
       #endif
@@ -724,7 +763,8 @@ void MJ_HTMLS(int type, String addr) {
       client.print(String("GET ") + url + " HTTP/1.0\r\n" + 
                    "Host: " + host + "\r\n" + 
                    "User-Agent: " + MJVer + "\r\n" + 
-                   "Connection: close\r\n\r\n");
+                   //"Connection: close\r\n" + 
+                   "\r\n");
                    //"Accept: */*\r\n" + 
       break;
 
@@ -735,13 +775,13 @@ void MJ_HTMLS(int type, String addr) {
       #endif
       prm=postdata;//postdata.replace("\n","\r\n");//改行を置き換え
 
-      client.print(String("POST ") + url + " HTTP/1.1\r\n" + 
+      client.print(String("POST ") + url + " HTTP/1.0\r\n" + 
                   "Accept: */*\r\n" + 
                   "Host: " + host + "\r\n" + 
                   "User-Agent: " + MJVer + "\r\n" + 
-                  "Connection: close\r\n" +
-                  "Content-Length: " + String(prm.length()) + "\r\n" +
+                  //"Connection: close\r\n" +
                   myPostContentType +
+                  "Content-Length: " + String(prm.length()) + "\r\n" +
                   "\r\n" + 
                   prm);
                   //"Content-Type: application/x-www-form-urlencoded;\r\n" +
@@ -815,7 +855,8 @@ void MJ_HTMLS(int type, String addr) {
     case HTML_POST:
     case HTML_POSTS:
       Serial.println("'POST OK!");
-      IJCodeSendString(WS_num,"'POST OK!\n");
+      IJCodeSendString(WS_num,"'POST OK!");
+      IJCodeSend(WS_num, 0x0a);
       #ifdef useMJLED
         digitalWrite(postLED, LOW);
       #endif
