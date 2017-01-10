@@ -4,11 +4,24 @@ MixJuiceのファームと入れ替えて使うこともできます。<br>
 ただしその場合MixJuiceの機能は失われます。<br>
 自己責任においてご利用ください。 <br>
 <br>
-### 必要な物 ###
+### 特徴 ###
+* IchigoJamにモニタやキーボードを付けなくても、iPad上などのブラウザからIchigoJamを操作できます。<br>
+* テキストファイルからプログラムをIchigoJamにアップロードできます。<br>
+* MixJuiceの"MJ GET"、"MJ POST"コマンドが使えます。
+* MixJuiceの"MJ GET"コマンドが使えるので、MixJuice対応のサイトから直接プログラムをダウンロードできます。<br>
+* エスケープシーケンスでカラー表示ができます。<br>
+* OTAに対応しているのでWiFi経由でファームを書き換えらえます。<br>
+
+
+### 構成 ###
+* IchigoJam + ESP-WROOM-02(MixJuice)<br>
+
+
+### インストールするために必要な物 ###
 * Arduino IDE (1.6.8で動作確認をしました。)<br>
 * SPIFFSファイルシステムアップローダー：<https://github.com/esp8266/arduino-esp8266fs-plugin><br>
 * ArduinoWebSocketsライブラリ ：<https://github.com/Links2004/arduinoWebSockets><br>
-* QueueArray Library For Arduino : <http://playground.arduino.cc/Code/QueueArray>
+* QueueArray Library For Arduino : <http://playground.arduino.cc/Code/QueueArray><br>
 * IchigoJam用の TrueTypeフォント「IchigoJam-1.2.ttf」：<http://15jamrecipe.jimdo.com/ツール/フォント-truetype/><br>
 
 
@@ -21,7 +34,6 @@ MixJuiceのファームと入れ替えて使うこともできます。<br>
  5. スケッチのssidとpasswordを自分の環境に合わせて書き換えて下さい。<br>
  6. スケッチをコンパイルしてESP-WROOM-02に書き込みます。<br>
  7. SPIFFSファイルシステムアップローダーでdataフォルダの中のファイルをSPIFSに書き込みます。<br>
-
 
 
 ### 接続 ###
@@ -43,7 +55,7 @@ MixJuiceの回路を参考にして下さい。<http://mixjuice.shizentai.jp/><b
 ### 制限事項 ###
 * PEEK/POKE命令を使ったプログラムは正常に動かない可能性があります。<br>
 * SCROLLの左右スクロールには対応していません。<br>
-* 一度に大量のデータを画面表示すると取りこぼすことがあります。<br>
+* 一度に大量のデータを画面表示するとデータを取りこぼすことがあります。<br>
 * その他、汎用のシリアルターミナルソフトを使った時と同じ制限があります。<br>
 
 ---
