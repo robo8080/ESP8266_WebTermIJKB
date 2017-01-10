@@ -40,6 +40,12 @@ MixJuiceの回路を参考にして下さい。<http://mixjuice.shizentai.jp/><b
  上手く接続できないときは、http://192.168.xxx.xxx の様に、IPアドレスで直接アクセスして下さい。<br>
 
 
+### 制限事項 ###
+* PEEK/POKE命令を使ったプログラムは正常に動かない可能性があります。<br>
+* SCROLLの左右スクロールには対応していません。<br>
+* 一度に大量のデータを画面表示すると取りこぼすことがあります。<br>
+* その他、汎用のシリアルターミナルソフトを使った時と同じ制限があります。<br>
+
 ---
 WebTermには、Michio OnoさんのMicJackのソースの一部を使わせて頂いております。<br>
 MicJack CC BY Michio Ono (Micono Utilities) <http://ijutilities.micutil.com>
