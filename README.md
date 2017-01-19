@@ -17,6 +17,11 @@ MixJuiceのファームと入れ替えて使うこともできます。<br>
 * IchigoJam + ESP-WROOM-02(MixJuice)<br>
 
 
+### 構成例 ###
+IchigoJam + ESPr Developer<br>
+![画像1](images/image1.png)<br>
+
+
 ### インストールするために必要な物 ###
 * Arduino IDE (1.6.8で動作確認をしました。)<br>
 * SPIFFSファイルシステムアップローダー：<https://github.com/esp8266/arduino-esp8266fs-plugin><br>
