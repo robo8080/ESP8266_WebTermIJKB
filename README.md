@@ -18,7 +18,7 @@ MixJuiceのファームと入れ替えて使うこともできます。<br>
 
 
 ### 構成例 ###
-IchigoJam + ESPr Developer<br>
+* IchigoJam + [ESPr Developer](https://www.switch-science.com/catalog/2500/ "Title")<br>
 ![画像1](images/image1.png)<br>
 
 
