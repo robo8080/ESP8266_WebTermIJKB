@@ -5,10 +5,10 @@ MixJuiceのファームと入れ替えて使うこともできます。<br>
 自己責任においてご利用ください。 <br>
 <br>
 ### 特徴 ###
-* IchigoJamにモニタやキーボードを付けなくても、iPad上などのブラウザからIchigoJamを操作できます。<br>
+* IchigoJamにモニタやキーボードを付けなくてもiPad上などのブラウザからIchigoJamを操作できます。<br>
 * テキストファイルからプログラムをIchigoJamにアップロードできます。<br>
 * MixJuiceの"MJ GET"、"MJ POST"コマンドが使えます。
-* MixJuiceの"MJ GET"コマンドが使えるので、MixJuice対応のサイトから直接プログラムをダウンロードできます。<br>
+* MixJuiceの"MJ GET"コマンドが使えるのでMixJuice対応のサイトから直接プログラムをダウンロードできます。<br>
 * エスケープシーケンスでカラー表示ができます。<br>
 * OTAに対応しているのでWiFi経由でファームを書き換えらえます。<br>
 
@@ -34,7 +34,8 @@ MixJuiceのファームと入れ替えて使うこともできます。<br>
  5. スケッチのssidとpasswordを自分の環境に合わせて書き換えて下さい。<br>
  6. スケッチをコンパイルしてESP-WROOM-02に書き込みます。<br>
  7. SPIFFSファイルシステムアップローダーでdataフォルダの中のファイルをSPIFSに書き込みます。<br>
-
+ 8. Arduino IDEのシリアルモニタを起動してアクセスポイントに正常に接続出来るか確認して下さい。（通信速度19200bps）<br>
+正常に接続出来ればESP-WROOM-02に割り振られたIPアドレスが表示されます。メモしておいてください。<br>
 
 ### 接続 ###
 ESP-WROOM-02のTXとIchigoJamのRX <br>
@@ -52,7 +53,14 @@ MixJuiceの回路を参考にして下さい。<http://mixjuice.shizentai.jp/><b
  上手く接続できないときは、http://192.168.xxx.xxx の様に、IPアドレスで直接アクセスして下さい。<br>
 
 
+### 使用例（動画） ###
+*  [iPad + Safari](https://youtu.be/f58g2r6TK8s "Title")<br>
+*  [Windows10 + Edge](https://youtu.be/etVt1T4E4ng "Title")<br>
+*  [iPhone + Chrome](https://youtu.be/XS2PH5S9e08 "Title") (Michio Onoさん作成動画)<br>
+
+
 ### 制限事項 ###
+* Ichigojamのスクリーンエディタ機能は使えません。<br>
 * PEEK/POKE命令を使ったプログラムは正常に動かない可能性があります。<br>
 * SCROLLの左右スクロールには対応していません。<br>
 * 一度に大量のデータを画面表示するとデータを取りこぼすことがあります。<br>

@@ -1,0 +1,16 @@
+1 'Foreground colors ESC[3nm n=0-7,9
+2 'background colors ESC[4nm n=0-7,9
+10 CLS:?CHR$(27);"[?25l";:WAIT 5
+20 FOR I = 0 TO 7
+30 LC I,I:?CHR$(27);"[3";I;"m";"IchigoJam";:WAIT 5
+40 NEXT
+50 ?CHR$(27);"[30m";
+60 FOR I = 0 TO 7
+70 LC I+8,I+8:?CHR$(27);"[4";I;"m";"IchigoJam";:WAIT 5
+80 NEXT
+90 ?CHR$(27);"[39m";CHR$(27);"[49m";
+100 WAIT 90:CLS
+110 FOR I = 1 TO 50
+120 LC RND(24),RND(24):?CHR$(27);"[3";RND(8);"m";"IchigoJam";:WAIT 5
+130 NEXT
+140 WAIT 90:CLS:?CHR$(27);"[39m";CHR$(27);"[49m";CHR$(27);"[?25h";
